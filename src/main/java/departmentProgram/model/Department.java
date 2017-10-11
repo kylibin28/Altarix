@@ -1,4 +1,4 @@
-package DepartmentProgram.model;
+package departmentProgram.model;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -41,18 +41,17 @@ public class Department {
         this.NameMainDepartment = NameMainDepartment;
     }
 
-    public String getName() {
+    public Integer getId_department() {
+        return id_department;
+    }
+
+    public String getDepartament_name() {
         return departament_name;
     }
 
     public Date getCreation_date() {
         return creation_date;
     }
-
-    public String getNameMainDepartment() {
-        return NameMainDepartment;
-    }
-
 
     @Override
     public String toString() {

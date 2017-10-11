@@ -1,6 +1,6 @@
-package DepartmentProgram.repository;
+package departmentProgram.repository;
 
-import DepartmentProgram.model.Department;
+import departmentProgram.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * Created by Макс on 11.10.2017.
  */
 @Repository
-public interface DepartmentRepository extends JpaRepository<Department, Integer> {
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 }
