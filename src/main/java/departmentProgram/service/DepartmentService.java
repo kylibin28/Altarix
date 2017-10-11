@@ -2,6 +2,10 @@ package departmentProgram.service;
 
 import departmentProgram.model.Department;
 import departmentProgram.repository.DepartmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +16,7 @@ import java.util.List;
 @Service
 public class DepartmentService {
 
+    @Autowired
     private DepartmentRepository departmentRepository;
 
     public List<Department> findAll(){
@@ -29,4 +34,11 @@ public class DepartmentService {
     public Department findById(int departmentId){
         return departmentRepository.findOne(departmentId);
     }
+
+//    @Override
+//    public Department findByName(String departamentName){
+//            return departmentRepository.findByName(departamentName);
+//        }
+
+
 }

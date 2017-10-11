@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "employees")
 public class Employee {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_employee")
     private Integer id_employee;
 
@@ -127,8 +127,6 @@ public class Employee {
                 ", post='" + post + '\'' +
                 ", salary=" + salary +
                 ", chief=" + chief +
-                ", departament_name=" + departament_name +
-                ", department=" + department +
                 '}';
     }
 }

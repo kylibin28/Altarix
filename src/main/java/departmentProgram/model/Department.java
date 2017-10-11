@@ -13,7 +13,7 @@ import java.util.Set;
 public class Department {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_department")
     private Integer id_department;
 
@@ -60,8 +60,6 @@ public class Department {
                 ", departament_name='" + departament_name + '\'' +
                 ", creation_date=" + creation_date +
                 ", NameMainDepartment='" + NameMainDepartment + '\'' +
-                ", employees=" + employees +
-                ", employee=" + employee +
                 '}';
     }
 }
