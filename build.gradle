@@ -1,14 +1,39 @@
-group 'Altarix'
-version '1.0'
+buildscript {
+    ext {
+        springBootVersion = '1.5.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.postgresql:postgresql:9.4-1206-jdbc42")
+    }
+}
+
+group 'TestAltarix'
+version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
 
 sourceCompatibility = 1.8
+
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-web-services')
+    compile('org.webjars:bootstrap:3.3.7')
+    runtime('org.postgresql:postgresql')
+    compileOnly('org.projectlombok:lombok')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
 }
