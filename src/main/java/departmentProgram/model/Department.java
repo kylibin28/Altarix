@@ -26,14 +26,34 @@ public class Department {
     @Column(name = "name_main_department")
     private String NameMainDepartment;
 
-    @OneToMany(mappedBy = "departament_name")
+    @OneToMany(mappedBy = "departament")
     private Set<Employee> employees = new HashSet<Employee>();
 
-    @OneToOne()
-    @JoinColumn(name = "employee")
-    private Employee employee;
+//    @OneToOne()
+//    @JoinColumn(name = "employee")
+//    private Employee employee;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Employee chiefEmployee;
 
     public Department(){}
+
+    public void setId_department(Integer id_department) {
+        this.id_department = id_department;
+    }
+
+    public void setDepartament_name(String departament_name) {
+        this.departament_name = departament_name;
+    }
+
+    public void setCreation_date(Date creation_date) {
+        this.creation_date = creation_date;
+    }
+
+    public void setNameMainDepartment(String nameMainDepartment) {
+        NameMainDepartment = nameMainDepartment;
+    }
 
     public Department(String departament_name, Date creation_date, String NameMainDepartment) {
         this.departament_name = departament_name;
@@ -51,6 +71,10 @@ public class Department {
 
     public Date getCreation_date() {
         return creation_date;
+    }
+
+    public Employee getChiefEmployee() {
+        return chiefEmployee;
     }
 
     @Override

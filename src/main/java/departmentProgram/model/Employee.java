@@ -45,17 +45,17 @@ public class Employee {
     private Boolean chief;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "departament_name")
-    private Department departament_name;
+    @JoinColumn(name = "departament")
+    private Department departament;
 
-    @OneToOne(mappedBy = "employee")
-    private Department department;
+//    @OneToOne(mappedBy = "employee")
+//    private Department department;
 
     public Employee(){}
 
-    public Employee(String name, String surname, String patronymic, String sex,
+    public Employee(String surname, String name,  String patronymic, String sex,
                     Date birthday, Date admition_date, Date dismissal_date,
-                    String post, Integer salary, Boolean chief, Department departament_name) {
+                    String post, Integer salary, Boolean chief, Department departament) {
         this.surname = surname;
         this.name = name;
         this.patronymic = patronymic;
@@ -66,7 +66,7 @@ public class Employee {
         this.post = post;
         this.salary = salary;
         this.chief = chief;
-        this.departament_name = departament_name;
+        this.departament = departament;
     }
 
     public String getSurname() {
@@ -109,9 +109,61 @@ public class Employee {
         return chief;
     }
 
-    public Department getDepartament_name() {
-        return departament_name;
+    public Department getDepartament() {
+        return departament;
     }
+
+    public void setId_employee(Integer id_employee) {
+        this.id_employee = id_employee;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setAdmition_date(Date admition_date) {
+        this.admition_date = admition_date;
+    }
+
+    public void setDismissal_date(Date dismissal_date) {
+        this.dismissal_date = dismissal_date;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
+
+    public void setChief(Boolean chief) {
+        this.chief = chief;
+    }
+
+    public void setDepartament(Department departament) {
+        this.departament = departament;
+    }
+
+//    public void setDepartment(Department department) {
+//        this.department = department;
+//    }
 
     @Override
     public String toString() {
