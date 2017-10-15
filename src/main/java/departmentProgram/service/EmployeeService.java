@@ -6,6 +6,7 @@ import departmentProgram.repository.DepartmentRepository;
 import departmentProgram.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
@@ -22,28 +23,28 @@ public class EmployeeService {
     @Autowired
     private DepartmentRepository departmentService;
 
-    public List<Employee> findAll(){
+    public List<Employee> findAll() {
         return employeeRepository.findAll();
     }
 
-    public Employee save(Employee employee){
+    public Employee save(Employee employee) {
         return employeeRepository.save(employee);
     }
 
-    public void delete(Employee employee){
+    public void delete(Employee employee) {
         employeeRepository.delete(employee);
     }
 
-    public Employee findById(int departmentId){
-        return employeeRepository.findOne(departmentId);
+    public Employee findById(int employeeID) {
+        return employeeRepository.findOne(employeeID);
     }
 
-    public List<Employee> findEmployeesInDepartment(String departmemtName){
+    public List<Employee> findEmployeesInDepartment(String departmemtName) {
         Department dep = departmentService.findByName(departmemtName);
         return employeeRepository.findEmployeesInDepartment(dep.getId_department());
     }
 
-    public void updateEmployee(Employee oldEmployee, Employee newEmployee){
+    public void updateEmployee(Employee oldEmployee, Employee newEmployee) {
         oldEmployee.setSurname(newEmployee.getSurname());
         oldEmployee.setName(newEmployee.getName());
         oldEmployee.setPatronymic(newEmployee.getPatronymic());
@@ -58,13 +59,25 @@ public class EmployeeService {
         employeeRepository.save(oldEmployee);
     }
 
-    public void updateEmployeesDepartment(Employee oldEmployee, String newDepartmemtName){
+    public void updateEmployeesDepartment(Employee oldEmployee, String newDepartmemtName) {
         oldEmployee.setDepartament(departmentService.findByName(newDepartmemtName));
         employeeRepository.save(oldEmployee);
     }
 
-    public void dismissEmployee(Employee oldEmployee, Date demissDate){
+    public void dismissEmployee(Employee oldEmployee, Date demissDate) {
         oldEmployee.setDismissal_date(demissDate);
         employeeRepository.save(oldEmployee);
+    }
+
+    @Transactional
+    public void updateAllEmployeesDepartment(String oldDepartmentName, String newDepartmemtName) {
+        employeeRepository.updateAllEmployeesDepartment(
+                departmentService.findByName(oldDepartmentName).getId_department(),
+                departmentService.findByName(newDepartmemtName).getId_department()
+        );
+    }
+
+    public Employee findChief(Employee employee) {
+        return findById(departmentService.findChiefEmployee111(employee.getId_employee()));
     }
 }

@@ -1,11 +1,15 @@
 package departmentProgram.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by Макс on 11.10.2017.
  */
+
 @Entity
 @Table(name = "employees")
 public class Employee {
@@ -44,18 +48,22 @@ public class Employee {
     @Column(name = "chief", nullable = false)
     private Boolean chief;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "departament")
-    private Department departament;
+    public Integer getId_employee() {
+        return id_employee;
+    }
 
-//    @OneToOne(mappedBy = "employee")
-//    private Department department;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_department")
+    private Department id_department;
+
+    @OneToOne(mappedBy = "chief_employee")
+    private Department chief_employee;
 
     public Employee(){}
 
     public Employee(String surname, String name,  String patronymic, String sex,
                     Date birthday, Date admition_date, Date dismissal_date,
-                    String post, Integer salary, Boolean chief, Department departament) {
+                    String post, Integer salary, Boolean chief, Department id_department) {
         this.surname = surname;
         this.name = name;
         this.patronymic = patronymic;
@@ -66,7 +74,7 @@ public class Employee {
         this.post = post;
         this.salary = salary;
         this.chief = chief;
-        this.departament = departament;
+        this.id_department = id_department;
     }
 
     public String getSurname() {
@@ -110,7 +118,7 @@ public class Employee {
     }
 
     public Department getDepartament() {
-        return departament;
+        return id_department;
     }
 
     public void setId_employee(Integer id_employee) {
@@ -157,8 +165,8 @@ public class Employee {
         this.chief = chief;
     }
 
-    public void setDepartament(Department departament) {
-        this.departament = departament;
+    public void setDepartament(Department id_department) {
+        this.id_department = id_department;
     }
 
 //    public void setDepartment(Department department) {

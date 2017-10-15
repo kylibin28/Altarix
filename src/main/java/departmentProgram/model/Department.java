@@ -24,18 +24,26 @@ public class Department {
     private Date creation_date;
 
     @Column(name = "name_main_department")
-    private String NameMainDepartment;
+    private String nameMainDepartment;
 
-    @OneToMany(mappedBy = "departament")
+    @OneToMany(mappedBy = "id_department")
     private Set<Employee> employees = new HashSet<Employee>();
 
-//    @OneToOne()
-//    @JoinColumn(name = "employee")
-//    private Employee employee;
+    public Employee getChief_employee() {
+        return chief_employee;
+    }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private Employee chiefEmployee;
+    public void setChief_employee(Employee chief_employee) {
+        this.chief_employee = chief_employee;
+    }
+
+    @OneToOne()
+    @JoinColumn(name = "chief_employee")
+    private Employee chief_employee;
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @PrimaryKeyJoinColumn
+//    private Employee chiefEmployee;
 
     public Department(){}
 
@@ -52,13 +60,13 @@ public class Department {
     }
 
     public void setNameMainDepartment(String nameMainDepartment) {
-        NameMainDepartment = nameMainDepartment;
+        nameMainDepartment = nameMainDepartment;
     }
 
-    public Department(String departament_name, Date creation_date, String NameMainDepartment) {
+    public Department(String departament_name, Date creation_date, String nameMainDepartment) {
         this.departament_name = departament_name;
         this.creation_date = creation_date;
-        this.NameMainDepartment = NameMainDepartment;
+        this.nameMainDepartment = nameMainDepartment;
     }
 
     public Integer getId_department() {
@@ -74,7 +82,11 @@ public class Department {
     }
 
     public Employee getChiefEmployee() {
-        return chiefEmployee;
+        return chief_employee;
+    }
+
+    public String getNameMainDepartment() {
+        return nameMainDepartment;
     }
 
     @Override
@@ -83,7 +95,7 @@ public class Department {
                 "id_department=" + id_department +
                 ", departament_name='" + departament_name + '\'' +
                 ", creation_date=" + creation_date +
-                ", NameMainDepartment='" + NameMainDepartment + '\'' +
+                ", NameMainDepartment='" + nameMainDepartment + '\'' +
                 '}';
     }
 }

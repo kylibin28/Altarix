@@ -24,4 +24,12 @@ public interface DepartmentRepository extends JpaRepository<Department, Integer>
     @Query(value = "select sum(e.salary) from employees e where e.departament = :departament", nativeQuery = true)
     int departmentSalary(@Param("departament") int departament);
 
+
+    @Query(value = "Select chief_employee from departments where id_department = :id_department", nativeQuery = true)
+    int findChiefEmployee(@Param("id_department") int id_department);
+
+
+    @Query(value = "Select chief_employee from departments where id_department = " +
+            "(Select id_department from employees where id_employee = :id_employee)", nativeQuery = true)
+    int findChiefEmployee111(@Param("id_employee") int id_employee);
 }

@@ -29,45 +29,45 @@ public class TestClass {
     public void add() {
 
         departmentService.save(new Department(
-                "Six",
+                "First",
                 new Date(2008 - 1900, 12, 7),
-                "Four")
+                null)
         );
 
         departmentService.save(new Department(
-                "Seven",
+                "Second",
                 new Date(2010 - 1900, 6, 10),
-                "Four")
+                "First")
         );
 
 
-        employeeService.save(new Employee(
-                "Борисевич",
-                "Илья",
-                "Александрович",
-                "Мужской",
-                new Date(1995 - 1900, 4, 4),
-                new Date(2010 - 1900, 10, 10),
-                null,
-                "Директор",
-                45000,
-                true,
-                departmentService.findByName("Six"))
-        );
-
-        employeeService.save(new Employee(
-                "Сальников",
-                "Михаил",
-                "Александрович",
-                "Мужской",
-                new Date(1985 - 1900, 8, 16),
-                new Date(2012 - 1900, 10, 10),
-                null,
-                "Менеджер",
-                25000,
-                false,
-                departmentService.findByName("Six"))
-        );
+//        employeeService.save(new Employee(
+//                "Крикунов",
+//                "Леонид",
+//                "Викторович",
+//                "Мужской",
+//                new Date(1995 - 1900, 03, 3),
+//                new Date(2010 - 1900, 10, 10),
+//                null,
+//                "Директор",
+//                45000,
+//                false,
+//                departmentService.findByName("Six"))
+//        );
+//
+//        employeeService.save(new Employee(
+//                "Селиверстов",
+//                "Геннадий",
+//                "Александрович",
+//                "Мужской",
+//                new Date(1985 - 1900, 8, 16),
+//                new Date(2012 - 1900, 10, 10),
+//                null,
+//                "Руководитель",
+//                50000,
+//                true,
+//                departmentService.findByName("Six"))
+//        );
 
 
     }
@@ -89,6 +89,10 @@ public class TestClass {
 
     @Test
     public void select() {
+//
+//        Employee emp = employeeService.findChief(employeeService.findById(6));
+//        System.out.println("Chief-"+emp.toString());
+//
 //        Department dep = departmentService.findByName("First");
 //        System.out.println(dep.toString());
 
@@ -97,21 +101,32 @@ public class TestClass {
 //            System.out.println(employee.toString());
 //        }
 
-        System.out.println("salary=" + departmentService.departmentSalary("Six"));
+//        System.out.println("salary=" + departmentService.departmentSalary("Six"));
 
 //        List<Department> departmentList = departmentService.findSubDepartments("Six");
 //        for (Department department : departmentList) {
 //            System.out.println(department.toString());
 //        }
+//
+//
+ List<Department> departmentList = departmentService.findAllMainDepartments("Six");
+        for (Department department : departmentList) {
+            System.out.println(department.toString());
+        }
     }
 
     @Test
     public void update() {
+        departmentService.updateChiefEmployee(
+                departmentService.findByName("Six"),
+                employeeService.findById(4));
+//        employeeService.updateAllEmployeesDepartment("Six", "Seven");
+
 //        departmentService.updateMainDepartment(departmentService.findByName("New"),"Six");
 //        Employee employee = employeeService.findById(3);
-        Employee emp = employeeService.findById(3);
-//        employeeService.updateEmployeesDepartment(emp, "Seven");
-        employeeService.dismissEmployee(emp, new Date(2015,10,18));
+//        Employee emp = employeeService.findById(3);
+////        employeeService.updateEmployeesDepartment(emp, "Seven");
+//        employeeService.dismissEmployee(emp, new Date(2015,10,18));
 //
 //        employeeService.updateEmployee(employee, new Employee(
 //                "Сальников",
