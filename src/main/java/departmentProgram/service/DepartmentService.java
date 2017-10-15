@@ -60,7 +60,7 @@ public class DepartmentService {
     }
 
     public int findChiefEmployee(Department department) {
-        return departmentRepository.departmentSalary(department.getId_department());
+        return departmentRepository.findChiefEmployee(department.getId_department());
     }
 
     public List<Department> findAllMainDepartments(String nameDepartment) {
