@@ -17,17 +17,6 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Modifying
-    @Query(value = "update employees set departament = :new_department where departament = :old_department", nativeQuery = true) //and e.chief =: false
+    @Query(value = "update employees set id_department = :new_department where id_department = :old_department", nativeQuery = true) //and e.chief =: false
     void updateAllEmployeesDepartment(@Param("old_department") int old_department, @Param("new_department") int new_department);
-
-    @Query(value = "select * from departments where id_department = " +
-            "(Select id_department from employees  where id_employee = :id_employee)",
-            nativeQuery = true)//e.id_employee = :id_employee
-    int findChief(@Param("id_employee") int id_employee);
-
-    @Query(value = "Select id_department from employees where id_employee = :id_employee",
-            nativeQuery = true)
-    int findEmployeesDepartment(@Param("id_employee") int id_employee);
-
-
 }

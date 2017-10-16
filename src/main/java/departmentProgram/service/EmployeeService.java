@@ -1,6 +1,5 @@
 package departmentProgram.service;
 
-import departmentProgram.model.Department;
 import departmentProgram.model.Employee;
 import departmentProgram.repository.DepartmentRepository;
 import departmentProgram.repository.EmployeeRepository;
@@ -23,19 +22,19 @@ public class EmployeeService {
     @Autowired
     private DepartmentRepository departmentService;
 
-    public List<Employee> findAll() {
+    public List<Employee> findAllEmployees() {
         return employeeRepository.findAll();
     }
 
-    public Employee save(Employee employee) {
+    public Employee saveEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
 
-    public void delete(Employee employee) {
+    public void deleteEmployee(Employee employee) {
         employeeRepository.delete(employee);
     }
 
-    public Employee findById(int employeeID) {
+    public Employee findEmployeeById(int employeeID) {
         return employeeRepository.findOne(employeeID);
     }
 
@@ -55,7 +54,7 @@ public class EmployeeService {
     }
 
     public void updateEmployeesDepartment(Employee oldEmployee, String newDepartmemtName) {
-        oldEmployee.setDepartament(departmentService.findByName(newDepartmemtName));
+        oldEmployee.setDepartament(departmentService.findDepartmentByDepartment_name(newDepartmemtName));
         employeeRepository.save(oldEmployee);
     }
 
@@ -67,12 +66,12 @@ public class EmployeeService {
     @Transactional
     public void changeDepartment(String oldDepartmentName, String newDepartmemtName) {
         employeeRepository.updateAllEmployeesDepartment(
-                departmentService.findByName(oldDepartmentName).getId_department(),
-                departmentService.findByName(newDepartmemtName).getId_department()
+                departmentService.findDepartmentByDepartment_name(oldDepartmentName).getId_department(),
+                departmentService.findDepartmentByDepartment_name(newDepartmemtName).getId_department()
         );
     }
 
     public Employee findChiefOfEmployee(Employee employee) {
-        return findById(departmentService.findChiefEmployee111(employee.getId_employee()));
+        return findEmployeeById(departmentService.findChiefEmployee(employee.getId_employee()));
     }
 }

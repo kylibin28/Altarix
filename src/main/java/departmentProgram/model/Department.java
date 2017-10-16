@@ -17,8 +17,8 @@ public class Department {
     @Column(name = "id_department")
     private Integer id_department;
 
-    @Column(name = "departament_name", length = 100, nullable = false, unique = true)
-    private String departament_name;
+    @Column(name = "department_name", length = 100, nullable = false, unique = true)
+    private String department_name;
 
     @Column(name = "creation_date", nullable = false)
     private Date creation_date;
@@ -51,8 +51,8 @@ public class Department {
         this.id_department = id_department;
     }
 
-    public void setDepartament_name(String departament_name) {
-        this.departament_name = departament_name;
+    public void setDepartment_name(String department_name) {
+        this.department_name = department_name;
     }
 
     public void setCreation_date(Date creation_date) {
@@ -64,7 +64,7 @@ public class Department {
     }
 
     public Department(String departament_name, Date creation_date, String nameMainDepartment) {
-        this.departament_name = departament_name;
+        this.department_name = departament_name;
         this.creation_date = creation_date;
         this.nameMainDepartment = nameMainDepartment;
     }
@@ -73,8 +73,8 @@ public class Department {
         return id_department;
     }
 
-    public String getDepartament_name() {
-        return departament_name;
+    public String getDepartment_name() {
+        return department_name;
     }
 
     public Date getCreation_date() {
@@ -93,7 +93,7 @@ public class Department {
     public String toString() {
         return "Department{" +
                 "id_department=" + id_department +
-                ", departament_name='" + departament_name + '\'' +
+                ", department_name='" + department_name + '\'' +
                 ", creation_date=" + creation_date +
                 ", NameMainDepartment='" + nameMainDepartment + '\'' +
                 '}';

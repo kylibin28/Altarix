@@ -27,22 +27,22 @@ public class EmployeeProxyResource {
 
     @RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
     public void addEmployee(@RequestBody Employee employee) {
-        employeeService.save(employee);
+        employeeService.saveEmployee(employee);
     }
 
     @RequestMapping(value = "/deleteEmployee", method = RequestMethod.DELETE)
     public void deleteEmployee(@RequestBody Employee employee) {
-        employeeService.delete(employee);
+        employeeService.deleteEmployee(employee);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Employee> findAllEmployee() {
-        return employeeService.findAll();
+        return employeeService.findAllEmployees();
     }
 
     @RequestMapping(value = "/findEmployeesById", method = RequestMethod.GET)
     public Employee findEmployeesById(@RequestBody int id) {
-        return employeeService.findById(id);
+        return employeeService.findEmployeeById(id);
     }
 
     @RequestMapping(value = "/findEmployeesInDepartment", method = RequestMethod.GET)

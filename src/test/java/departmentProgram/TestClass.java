@@ -28,58 +28,58 @@ public class TestClass {
     @Test
     public void add() {
 
-        departmentService.save(new Department(
+        departmentService.saveDepartment(new Department(
                 "First",
                 new Date(2008 - 1900, 12, 7),
                 null)
         );
 
-        departmentService.save(new Department(
+        departmentService.saveDepartment(new Department(
                 "Second",
                 new Date(2010 - 1900, 6, 10),
                 "First")
         );
 
 
-//        employeeService.save(new Employee(
-//                "Крикунов",
-//                "Леонид",
-//                "Викторович",
-//                "Мужской",
-//                new Date(1995 - 1900, 03, 3),
-//                new Date(2010 - 1900, 10, 10),
-//                null,
-//                "Директор",
-//                45000,
-//                false,
-//                departmentService.findByName("Six"))
-//        );
-//
-//        employeeService.save(new Employee(
-//                "Селиверстов",
-//                "Геннадий",
-//                "Александрович",
-//                "Мужской",
-//                new Date(1985 - 1900, 8, 16),
-//                new Date(2012 - 1900, 10, 10),
-//                null,
-//                "Руководитель",
-//                50000,
-//                true,
-//                departmentService.findByName("Six"))
-//        );
+        employeeService.saveEmployee(new Employee(
+                "Крикунов",
+                "Леонид",
+                "Викторович",
+                "Мужской",
+                new Date(1995 - 1900, 03, 3),
+                new Date(2010 - 1900, 10, 10),
+                null,
+                "Директор",
+                45000,
+                false,
+                departmentService.findDepartmentByDepartmentName("Six"))
+        );
+
+        employeeService.saveEmployee(new Employee(
+                "Селиверстов",
+                "Геннадий",
+                "Александрович",
+                "Мужской",
+                new Date(1985 - 1900, 8, 16),
+                new Date(2012 - 1900, 10, 10),
+                null,
+                "Руководитель",
+                50000,
+                true,
+                departmentService.findDepartmentByDepartmentName("Six"))
+        );
 
 
     }
 
     @Test
     public void selectAll() {
-        List<Department> departmentList = departmentService.findAll();
+        List<Department> departmentList = departmentService.findAllDepartments();
         for (Department department : departmentList) {
             System.out.println(department.toString());
         }
 
-        List<Employee> employeeList = employeeService.findAll();
+        List<Employee> employeeList = employeeService.findAllEmployees();
         for (Employee employee : employeeList) {
             System.out.println(employee.toString());
         }
@@ -90,10 +90,10 @@ public class TestClass {
     @Test
     public void select() {
 //
-//        Employee emp = employeeService.findChief(employeeService.findById(6));
+//        Employee emp = employeeService.findChief(employeeService.findEmployeeById(6));
 //        System.out.println("Chief-"+emp.toString());
 //
-//        Department dep = departmentService.findByName("First");
+//        Department dep = departmentService.findDepartmentByDepartmentName("First");
 //        System.out.println(dep.toString());
 
 //        List<Employee> employeeList = employeeService.findEmployeesInDepartment("Six");
@@ -109,7 +109,7 @@ public class TestClass {
 //        }
 //
 //
- List<Department> departmentList = departmentService.findAllMainDepartments("Six");
+        List<Department> departmentList = departmentService.findAllMainDepartments("Second");
         for (Department department : departmentList) {
             System.out.println(department.toString());
         }
@@ -118,13 +118,13 @@ public class TestClass {
     @Test
     public void update() {
         departmentService.updateChiefEmployee(
-                departmentService.findByName("Six"),
-                employeeService.findById(4));
+                departmentService.findDepartmentByDepartmentName("Six"),
+                employeeService.findEmployeeById(4));
 //        employeeService.changeDepartment("Six", "Seven");
 
-//        departmentService.updateMainDepartment(departmentService.findByName("New"),"Six");
-//        Employee employee = employeeService.findById(3);
-//        Employee emp = employeeService.findById(3);
+//        departmentService.updateMainDepartment(departmentService.findDepartmentByDepartmentName("New"),"Six");
+//        Employee employee = employeeService.findEmployeeById(3);
+//        Employee emp = employeeService.findEmployeeById(3);
 ////        employeeService.updateEmployeesDepartment(emp, "Seven");
 //        employeeService.dismissEmployee(emp, new Date(2015,10,18));
 //
@@ -139,13 +139,13 @@ public class TestClass {
 //                "Менеджер",
 //                25000,
 //                false,
-//                departmentService.findById(1))
+//                departmentService.findEmployeeById(1))
 //        );
     }
 
     @Test
     public void delete() {
-        employeeService.delete(employeeService.findById(3));
-        employeeService.delete(employeeService.findById(4));
+        employeeService.deleteEmployee(employeeService.findEmployeeById(3));
+        employeeService.deleteEmployee(employeeService.findEmployeeById(4));
     }
 }

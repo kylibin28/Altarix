@@ -4,12 +4,9 @@ import departmentProgram.model.Department;
 import departmentProgram.model.Employee;
 import departmentProgram.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,24 +21,24 @@ public class DepartmentService {
     @Autowired
     private EmployeeService employeeService;
 
-    public List<Department> findAll() {
+    public List<Department> findAllDepartments() {
         return departmentRepository.findAll();
     }
 
-    public Department save(Department department) {
+    public Department saveDepartment(Department department) {
         return departmentRepository.save(department);
     }
 
-    public void delete(Department department) {
+    public void deleteDepartment(Department department) {
         departmentRepository.delete(department);
     }
 
-    public Department findById(int departmentId) {
+    public Department findDepartmentById(int departmentId) {
         return departmentRepository.findOne(departmentId);
     }
 
-    public Department findByName(String departamentName) {
-        return departmentRepository.findByName(departamentName);
+    public Department findDepartmentByDepartmentName(String departamentName) {
+        return departmentRepository.findDepartmentByDepartment_name(departamentName);
     }
 
     public List<Department> findSubDepartments(String name_main_department) {
@@ -49,7 +46,7 @@ public class DepartmentService {
     }
 
     public List<Employee> findEmployeesInDepartment(String departmemtName) {
-        Department dep = findByName(departmemtName);
+        Department dep = findDepartmentByDepartmentName(departmemtName);
         return departmentRepository.findEmployeesInDepartment(dep.getId_department());
     }
 
@@ -60,7 +57,7 @@ public class DepartmentService {
     }
 
     public int departmentSalary(String departamentName) {
-        return departmentRepository.departmentSalary(departmentRepository.findByName(departamentName).getId_department());
+        return departmentRepository.departmentSalary(departmentRepository.findDepartmentByDepartment_name(departamentName).getId_department());
     }
 
     public void updateChiefEmployee(Department oldDepartment, Employee chiefEmployee) {
@@ -69,15 +66,15 @@ public class DepartmentService {
     }
 
     public Employee findChiefEmployee(Department department) {
-        return employeeService.findById(departmentRepository.findChiefEmployee(department.getId_department()));
+        return employeeService.findEmployeeById(departmentRepository.findChiefEmployee(department.getId_department()));
     }
 
     public List<Department> findAllMainDepartments(String nameDepartment) {
         List<Department> departmentList = new ArrayList<Department>();
-        Department department = findByName(nameDepartment);
+        Department department = findDepartmentByDepartmentName(nameDepartment);
         String mainName = department.getNameMainDepartment();
         while (mainName != null){
-           Department dep = findByName(mainName);
+           Department dep = findDepartmentByDepartmentName(mainName);
            departmentList.add(dep);
            mainName = dep.getNameMainDepartment();
         }
@@ -86,10 +83,10 @@ public class DepartmentService {
 
     public List<Department> findAllSubDepartments(String nameDepartment) {//TODO рекурсивный поиск
         List<Department> departmentList = new ArrayList<Department>();
-        Department department = findByName(nameDepartment);
+        Department department = findDepartmentByDepartmentName(nameDepartment);
         String mainName = department.getNameMainDepartment();
         while (mainName != null){
-            Department dep = findByName(mainName);
+            Department dep = findDepartmentByDepartmentName(mainName);
             departmentList.add(dep);
             mainName = dep.getNameMainDepartment();
         }
