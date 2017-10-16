@@ -39,11 +39,6 @@ public class EmployeeService {
         return employeeRepository.findOne(employeeID);
     }
 
-    public List<Employee> findEmployeesInDepartment(String departmemtName) {
-        Department dep = departmentService.findByName(departmemtName);
-        return employeeRepository.findEmployeesInDepartment(dep.getId_department());
-    }
-
     public void updateEmployee(Employee oldEmployee, Employee newEmployee) {
         oldEmployee.setSurname(newEmployee.getSurname());
         oldEmployee.setName(newEmployee.getName());
@@ -64,20 +59,20 @@ public class EmployeeService {
         employeeRepository.save(oldEmployee);
     }
 
-    public void dismissEmployee(Employee oldEmployee, Date demissDate) {
-        oldEmployee.setDismissal_date(demissDate);
-        employeeRepository.save(oldEmployee);
+    public void dismissEmployee(Employee employee, Date demissDate) {
+        employee.setDismissal_date(demissDate);
+        employeeRepository.save(employee);
     }
 
     @Transactional
-    public void updateAllEmployeesDepartment(String oldDepartmentName, String newDepartmemtName) {
+    public void changeDepartment(String oldDepartmentName, String newDepartmemtName) {
         employeeRepository.updateAllEmployeesDepartment(
                 departmentService.findByName(oldDepartmentName).getId_department(),
                 departmentService.findByName(newDepartmemtName).getId_department()
         );
     }
 
-    public Employee findChief(Employee employee) {
+    public Employee findChiefOfEmployee(Employee employee) {
         return findById(departmentService.findChiefEmployee111(employee.getId_employee()));
     }
 }

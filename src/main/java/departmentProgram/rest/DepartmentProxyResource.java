@@ -21,25 +21,12 @@ import java.util.List;
 /**
  * Created by Макс on 15.10.2017.
  */
+@RequestMapping(value = "/departments")
 @RestController
-@RequestMapping("/proxy/department")
-@MultipartConfig
-@Slf4j
-@RequiredArgsConstructor
-@ConfigurationProperties("localpath.department")
 public class DepartmentProxyResource {
-
-    @Value("${department.directory}")
-    private String directory;
-
-    @Value("${department.name}")
-    private String name;
 
     @Autowired
     private DepartmentService departmentService;
-
-    @Autowired
-    private EmployeeService employeeService;
 
     @RequestMapping(value = "/addDepartment", method = RequestMethod.POST)
     public void addDepartment(@RequestBody Department department) {
@@ -51,7 +38,7 @@ public class DepartmentProxyResource {
 
     @RequestMapping(value = "/deleteDepartment", method = RequestMethod.DELETE)
     public void deleteDepartment(@RequestBody Department department) {
-        List<Employee> employeeList = employeeService.findEmployeesInDepartment(department.getDepartament_name());
+        List<Employee> employeeList = departmentService.findEmployeesInDepartment(department.getDepartament_name());
         if (employeeList != null && employeeList.size() != 0)
             throw new RuntimeException("The department contains employees!");
         changeDepartmentsAssociation(department);
@@ -71,7 +58,7 @@ public class DepartmentProxyResource {
 
     @RequestMapping(method = RequestMethod.GET)
     public Employee findChiefEmployee(Department department) {
-        return employeeService.findById(departmentService.findChiefEmployee(department));
+        return departmentService.findChiefEmployee(department);
     }
 
     @RequestMapping(value = "/updateDepartment", method = RequestMethod.PUT)
@@ -79,7 +66,7 @@ public class DepartmentProxyResource {
         Department department1Duplicate = departmentService.findByName(department.getDepartament_name());
         if (department1Duplicate != null)
             throw new RuntimeException("Found duplicate during exception");
-        departmentService.delete(department);
+        departmentService.save(department);
     }
 
     @RequestMapping(value = "/updateMainDepartment", method = RequestMethod.PUT)

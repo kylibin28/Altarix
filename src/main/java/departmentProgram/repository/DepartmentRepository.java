@@ -1,6 +1,7 @@
 package departmentProgram.repository;
 
 import departmentProgram.model.Department;
+import departmentProgram.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,4 +33,7 @@ public interface DepartmentRepository extends JpaRepository<Department, Integer>
     @Query(value = "Select chief_employee from departments where id_department = " +
             "(Select id_department from employees where id_employee = :id_employee)", nativeQuery = true)
     int findChiefEmployee111(@Param("id_employee") int id_employee);
+
+    @Query(value = "select * from employees e where e.departament = :departament", nativeQuery = true)
+    List<Employee> findEmployeesInDepartment(@Param("departament") int departament);
 }

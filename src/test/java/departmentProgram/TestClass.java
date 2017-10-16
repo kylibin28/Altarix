@@ -120,7 +120,7 @@ public class TestClass {
         departmentService.updateChiefEmployee(
                 departmentService.findByName("Six"),
                 employeeService.findById(4));
-//        employeeService.updateAllEmployeesDepartment("Six", "Seven");
+//        employeeService.changeDepartment("Six", "Seven");
 
 //        departmentService.updateMainDepartment(departmentService.findByName("New"),"Six");
 //        Employee employee = employeeService.findById(3);

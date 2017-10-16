@@ -21,6 +21,9 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    @Autowired
+    private EmployeeService employeeService;
+
     public List<Department> findAll() {
         return departmentRepository.findAll();
     }
@@ -45,6 +48,12 @@ public class DepartmentService {
         return departmentRepository.findSubDepartments(name_main_department);
     }
 
+    public List<Employee> findEmployeesInDepartment(String departmemtName) {
+        Department dep = findByName(departmemtName);
+        return departmentRepository.findEmployeesInDepartment(dep.getId_department());
+    }
+
+
     public void updateMainDepartment(Department department, String name_main_department) {
         department.setNameMainDepartment(name_main_department);
         departmentRepository.save(department);
@@ -59,8 +68,8 @@ public class DepartmentService {
         departmentRepository.save(oldDepartment);
     }
 
-    public int findChiefEmployee(Department department) {
-        return departmentRepository.findChiefEmployee(department.getId_department());
+    public Employee findChiefEmployee(Department department) {
+        return employeeService.findById(departmentRepository.findChiefEmployee(department.getId_department()));
     }
 
     public List<Department> findAllMainDepartments(String nameDepartment) {
