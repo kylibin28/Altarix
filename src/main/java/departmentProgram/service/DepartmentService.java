@@ -21,6 +21,8 @@ public class DepartmentService {
     @Autowired
     private EmployeeService employeeService;
 
+    private List<Department> departmentList;
+
     public List<Department> findAllDepartments() {
         return departmentRepository.findAll();
     }
@@ -38,18 +40,12 @@ public class DepartmentService {
     }
 
     public Department findDepartmentByDepartmentName(String departamentName) {
-        return departmentRepository.findDepartmentByDepartment_name(departamentName);
+        return departmentRepository.findDepartmentByDepartmentName(departamentName);
     }
 
     public List<Department> findSubDepartments(String name_main_department) {
         return departmentRepository.findSubDepartments(name_main_department);
     }
-
-    public List<Employee> findEmployeesInDepartment(String departmemtName) {
-        Department dep = findDepartmentByDepartmentName(departmemtName);
-        return departmentRepository.findEmployeesInDepartment(dep.getId_department());
-    }
-
 
     public void updateMainDepartment(Department department, String name_main_department) {
         department.setNameMainDepartment(name_main_department);
@@ -57,7 +53,7 @@ public class DepartmentService {
     }
 
     public int departmentSalary(String departamentName) {
-        return departmentRepository.departmentSalary(departmentRepository.findDepartmentByDepartment_name(departamentName).getId_department());
+        return departmentRepository.departmentSalary(departmentRepository.findDepartmentByDepartmentName(departamentName).getId_department());
     }
 
     public void updateChiefEmployee(Department oldDepartment, Employee chiefEmployee) {
@@ -73,24 +69,28 @@ public class DepartmentService {
         List<Department> departmentList = new ArrayList<Department>();
         Department department = findDepartmentByDepartmentName(nameDepartment);
         String mainName = department.getNameMainDepartment();
-        while (mainName != null){
-           Department dep = findDepartmentByDepartmentName(mainName);
-           departmentList.add(dep);
-           mainName = dep.getNameMainDepartment();
-        }
-        return departmentList;
-    }
-
-    public List<Department> findAllSubDepartments(String nameDepartment) {//TODO рекурсивный поиск
-        List<Department> departmentList = new ArrayList<Department>();
-        Department department = findDepartmentByDepartmentName(nameDepartment);
-        String mainName = department.getNameMainDepartment();
-        while (mainName != null){
+        while (mainName != null) {
             Department dep = findDepartmentByDepartmentName(mainName);
             departmentList.add(dep);
             mainName = dep.getNameMainDepartment();
         }
         return departmentList;
+    }
+
+    public List<Department> findAllSubDepartments(String nameDepartment){
+        departmentList = new ArrayList<Department>();
+        findAllSubDepartmentsRec(nameDepartment);
+        return departmentList;
+    }
+
+    private void findAllSubDepartmentsRec(String nameDepartment) {
+        List<Department> subList = departmentRepository.findSubDepartments(nameDepartment);
+        if (subList != null) {
+            for (int i = 0; i < subList.size(); i++) {
+                departmentList.add(subList.get(i));
+                findAllSubDepartmentsRec(subList.get(i).getDepartment_name());
+            }
+        }
     }
 
 }

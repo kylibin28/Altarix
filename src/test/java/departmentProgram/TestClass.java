@@ -42,8 +42,8 @@ public class TestClass {
 
 
         employeeService.saveEmployee(new Employee(
-                "Крикунов",
-                "Леонид",
+                "Веселов",
+                "Константин",
                 "Викторович",
                 "Мужской",
                 new Date(1995 - 1900, 03, 3),
@@ -52,13 +52,13 @@ public class TestClass {
                 "Директор",
                 45000,
                 false,
-                departmentService.findDepartmentByDepartmentName("Six"))
+                departmentService.findDepartmentByDepartmentName("First"))
         );
 
         employeeService.saveEmployee(new Employee(
-                "Селиверстов",
-                "Геннадий",
-                "Александрович",
+                "Васильева",
+                "Татьяна",
+                "Константиновна",
                 "Мужской",
                 new Date(1985 - 1900, 8, 16),
                 new Date(2012 - 1900, 10, 10),
@@ -66,7 +66,21 @@ public class TestClass {
                 "Руководитель",
                 50000,
                 true,
-                departmentService.findDepartmentByDepartmentName("Six"))
+                departmentService.findDepartmentByDepartmentName("Second"))
+        );
+
+        employeeService.saveEmployee(new Employee(
+                "Шеремеев",
+                "Максим",
+                "Владимирович",
+                "Мужской",
+                new Date(1985 - 1900, 8, 16),
+                new Date(2012 - 1900, 10, 10),
+                null,
+                "Руководитель",
+                50000,
+                false,
+                departmentService.findDepartmentByDepartmentName("Second"))
         );
 
 
@@ -89,19 +103,28 @@ public class TestClass {
 
     @Test
     public void select() {
+
+
+        List<Employee> employeeList =  employeeService.findEmployeesByParameters("Шеремеев",
+                "Максим",
+                "Владимирович", new Date(1985 - 1900, 8, 16));
+        for (Employee employee : employeeList) {
+            System.out.println(employee.toString());
+        }
 //
-//        Employee emp = employeeService.findChief(employeeService.findEmployeeById(6));
-//        System.out.println("Chief-"+emp.toString());
+//        Employee emp = employeeService.findChiefOfEmployeeById(5);
+//        System.out.println("Chief-" + emp.toString());
+//
 //
 //        Department dep = departmentService.findDepartmentByDepartmentName("First");
 //        System.out.println(dep.toString());
 
-//        List<Employee> employeeList = employeeService.findEmployeesInDepartment("Six");
+//        List<Employee> employeeList = employeeService.findEmployeesInDepartment("First");
 //        for (Employee employee : employeeList) {
 //            System.out.println(employee.toString());
 //        }
 
-//        System.out.println("salary=" + departmentService.departmentSalary("Six"));
+//        System.out.println("salary=" + departmentService.departmentSalary("Second"));
 
 //        List<Department> departmentList = departmentService.findSubDepartments("Six");
 //        for (Department department : departmentList) {
@@ -109,23 +132,31 @@ public class TestClass {
 //        }
 //
 //
-        List<Department> departmentList = departmentService.findAllMainDepartments("Second");
-        for (Department department : departmentList) {
-            System.out.println(department.toString());
-        }
+//        List<Department> departmentList = departmentService.findAllMainDepartments("Second");
+//        for (Department department : departmentList) {
+//            System.out.println(department.toString());
+//        }
     }
 
     @Test
     public void update() {
-        departmentService.updateChiefEmployee(
-                departmentService.findDepartmentByDepartmentName("Six"),
-                employeeService.findEmployeeById(4));
+        employeeService.changeDepartment("Second", "First");
+
+//        departmentService.updateChiefEmployee(
+//                departmentService.findDepartmentByDepartmentName("Second"),
+//                employeeService.findEmployeeById(3));
+
+
 //        employeeService.changeDepartment("Six", "Seven");
 
-//        departmentService.updateMainDepartment(departmentService.findDepartmentByDepartmentName("New"),"Six");
+//        departmentService.updateMainDepartment(
+//                departmentService.findDepartmentByDepartmentName("Second"),
+//                "First");
 //        Employee employee = employeeService.findEmployeeById(3);
-//        Employee emp = employeeService.findEmployeeById(3);
-////        employeeService.updateEmployeesDepartment(emp, "Seven");
+
+//        Employee emp = employeeService.findEmployeeById(5);
+//        employeeService.updateEmployeesDepartment(emp, "First");
+
 //        employeeService.dismissEmployee(emp, new Date(2015,10,18));
 //
 //        employeeService.updateEmployee(employee, new Employee(

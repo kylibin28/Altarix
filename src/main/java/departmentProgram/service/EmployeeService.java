@@ -1,9 +1,11 @@
 package departmentProgram.service;
 
+import departmentProgram.model.Department;
 import departmentProgram.model.Employee;
 import departmentProgram.repository.DepartmentRepository;
 import departmentProgram.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,8 +55,12 @@ public class EmployeeService {
         employeeRepository.save(oldEmployee);
     }
 
+    public List<Employee> findEmployeesByParameters(String surname, String name, String patronymic, Date birthday) {
+        return employeeRepository.findEmployeesByParameters(surname, name, patronymic, birthday);
+    }
+
     public void updateEmployeesDepartment(Employee oldEmployee, String newDepartmemtName) {
-        oldEmployee.setDepartament(departmentService.findDepartmentByDepartment_name(newDepartmemtName));
+        oldEmployee.setDepartament(departmentService.findDepartmentByDepartmentName(newDepartmemtName));
         employeeRepository.save(oldEmployee);
     }
 
@@ -66,12 +72,17 @@ public class EmployeeService {
     @Transactional
     public void changeDepartment(String oldDepartmentName, String newDepartmemtName) {
         employeeRepository.updateAllEmployeesDepartment(
-                departmentService.findDepartmentByDepartment_name(oldDepartmentName).getId_department(),
-                departmentService.findDepartmentByDepartment_name(newDepartmemtName).getId_department()
+                departmentService.findDepartmentByDepartmentName(oldDepartmentName).getId_department(),
+                departmentService.findDepartmentByDepartmentName(newDepartmemtName).getId_department()
         );
     }
 
-    public Employee findChiefOfEmployee(Employee employee) {
-        return findEmployeeById(departmentService.findChiefEmployee(employee.getId_employee()));
+    public Employee findChiefOfEmployeeById(int id) {
+        return findEmployeeById(departmentService.findChiefEmployee(id));
+    }
+
+    public List<Employee> findEmployeesInDepartment(String departmemtName) {
+        Department dep = departmentService.findDepartmentByDepartmentName(departmemtName);
+        return employeeRepository.findEmployeesInDepartment(dep.getId_department());
     }
 }

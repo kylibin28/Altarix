@@ -1,5 +1,6 @@
 package departmentProgram.rest;
 
+import departmentProgram.model.Department;
 import departmentProgram.model.Employee;
 import departmentProgram.service.DepartmentService;
 import departmentProgram.service.EmployeeService;
@@ -35,7 +36,7 @@ public class EmployeeProxyResource {
         employeeService.deleteEmployee(employee);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/findAllEmployee",method = RequestMethod.GET)
     public List<Employee> findAllEmployee() {
         return employeeService.findAllEmployees();
     }
@@ -47,7 +48,12 @@ public class EmployeeProxyResource {
 
     @RequestMapping(value = "/findEmployeesInDepartment", method = RequestMethod.GET)
     public List<Employee> findEmployeesInDepartment(@RequestBody String departmemtName) {
-        return departmentService.findEmployeesInDepartment(departmemtName);
+        return employeeService.findEmployeesInDepartment(departmemtName);
+    }
+
+    @RequestMapping(value = "/findEmployeesByParameters", method = RequestMethod.GET)
+    public List<Employee> findEmployeesByParameters(@RequestBody String surname, String name, String patronymic, Date birthday) {
+        return employeeService.findEmployeesByParameters(surname, name, patronymic, birthday);
     }
 
     @RequestMapping(value = "/updateEmployee", method = RequestMethod.PUT)
@@ -57,6 +63,9 @@ public class EmployeeProxyResource {
 
     @RequestMapping(value = "/updateEmployeesDepartment", method = RequestMethod.PUT)
     public void updateEmployeesDepartment(@RequestBody Employee oldEmployee, String newDepartmemtName) {
+        Department department = departmentService.findDepartmentByDepartmentName(newDepartmemtName);
+        if(department == null)
+            throw new RuntimeException("Not found department " + newDepartmemtName);
         employeeService.updateEmployeesDepartment(oldEmployee, newDepartmemtName);
     }
 
@@ -71,7 +80,7 @@ public class EmployeeProxyResource {
     }
 
     @RequestMapping(value = "/findChiefOfEmployee", method = RequestMethod.PUT)
-    public Employee findChiefOfEmployee(@RequestBody Employee employee) {
-        return employeeService.findChiefOfEmployee(employee);
+    public Employee findChiefOfEmployee(@RequestBody int id) {
+        return employeeService.findChiefOfEmployeeById(id);
     }
 }

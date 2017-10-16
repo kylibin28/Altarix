@@ -187,6 +187,7 @@ public class Employee {
                 ", post='" + post + '\'' +
                 ", salary=" + salary +
                 ", chief=" + chief +
+//                ", chief: surname=" + chief_employee.getSurname() + " name=" + chief_employee.getName() +
                 '}';
     }
 }

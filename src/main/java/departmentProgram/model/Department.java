@@ -29,14 +29,6 @@ public class Department {
     @OneToMany(mappedBy = "id_department")
     private Set<Employee> employees = new HashSet<Employee>();
 
-    public Employee getChief_employee() {
-        return chief_employee;
-    }
-
-    public void setChief_employee(Employee chief_employee) {
-        this.chief_employee = chief_employee;
-    }
-
     @OneToOne()
     @JoinColumn(name = "chief_employee")
     private Employee chief_employee;
@@ -46,6 +38,20 @@ public class Department {
 //    private Employee chiefEmployee;
 
     public Department(){}
+
+    public Department(String departament_name, Date creation_date, String nameMainDepartment) {
+        this.department_name = departament_name;
+        this.creation_date = creation_date;
+        this.nameMainDepartment = nameMainDepartment;
+    }
+
+    public Employee getChief_employee() {
+        return chief_employee;
+    }
+
+    public void setChief_employee(Employee chief_employee) {
+        this.chief_employee = chief_employee;
+    }
 
     public void setId_department(Integer id_department) {
         this.id_department = id_department;
@@ -61,12 +67,6 @@ public class Department {
 
     public void setNameMainDepartment(String nameMainDepartment) {
         nameMainDepartment = nameMainDepartment;
-    }
-
-    public Department(String departament_name, Date creation_date, String nameMainDepartment) {
-        this.department_name = departament_name;
-        this.creation_date = creation_date;
-        this.nameMainDepartment = nameMainDepartment;
     }
 
     public Integer getId_department() {
@@ -91,11 +91,23 @@ public class Department {
 
     @Override
     public String toString() {
+
+        if(chief_employee != null && employees != null)
         return "Department{" +
                 "id_department=" + id_department +
                 ", department_name='" + department_name + '\'' +
                 ", creation_date=" + creation_date +
                 ", NameMainDepartment='" + nameMainDepartment + '\'' +
+                ", chief: surname=" + chief_employee.getSurname() + " name=" + chief_employee.getName() +
+                ", count_employees='" + employees.size() +
+                '}';
+        else return "Department{" +
+                "id_department=" + id_department +
+                ", department_name='" + department_name + '\'' +
+                ", creation_date=" + creation_date +
+                ", NameMainDepartment='" + nameMainDepartment + '\'' +
+                ", chief: surname= null" +
+                ", count_employees= null" +
                 '}';
     }
 }

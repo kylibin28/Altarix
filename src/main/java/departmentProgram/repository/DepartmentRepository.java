@@ -17,7 +17,7 @@ import java.util.List;
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
 
     @Query(value = "select * from departments d where d.department_name = :department_name", nativeQuery = true)
-    Department findDepartmentByDepartment_name(@Param("department_name") String department_name);
+    Department findDepartmentByDepartmentName(@Param("department_name") String department_name);
 
     @Query(value = "select * from departments d where d.name_main_department = :name_main_department", nativeQuery = true)
     List<Department> findSubDepartments(@Param("name_main_department") String name_main_department);
@@ -29,6 +29,4 @@ public interface DepartmentRepository extends JpaRepository<Department, Integer>
             "(Select id_department from employees where id_employee = :id_employee)", nativeQuery = true)
     int findChiefEmployee(@Param("id_employee") int id_employee);
 
-    @Query(value = "select * from employees e where e.id_department = :id_department", nativeQuery = true)
-    List<Employee> findEmployeesInDepartment(@Param("id_department") int id_department);
 }

@@ -3,6 +3,7 @@ package departmentProgram.rest;
 import departmentProgram.model.Department;
 import departmentProgram.model.Employee;
 import departmentProgram.service.DepartmentService;
+import departmentProgram.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,9 @@ public class DepartmentProxyResource {
     @Autowired
     private DepartmentService departmentService;
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @RequestMapping(value = "/addDepartment", method = RequestMethod.POST)
     public void addDepartment(@RequestBody Department department) {
         Department department1Duplicate = departmentService.findDepartmentByDepartmentName(department.getDepartment_name());
@@ -31,7 +35,7 @@ public class DepartmentProxyResource {
 
     @RequestMapping(value = "/deleteDepartment", method = RequestMethod.DELETE)
     public void deleteDepartment(@RequestBody Department department) {
-        List<Employee> employeeList = departmentService.findEmployeesInDepartment(department.getDepartment_name());
+        List<Employee> employeeList = employeeService.findEmployeesInDepartment(department.getDepartment_name());
         if (employeeList != null && employeeList.size() != 0)
             throw new RuntimeException("The department contains employees!");
         changeDepartmentsAssociation(department);
@@ -39,20 +43,21 @@ public class DepartmentProxyResource {
     }
 
     private void changeDepartmentsAssociation(Department department) {
-        List<Department> departmentList = departmentService.findAllSubDepartments(department.getDepartment_name());
+        List<Department> departmentList = departmentService.findSubDepartments(department.getDepartment_name());
         for (int i = 0; i < departmentList.size(); i++) {
             departmentService.updateMainDepartment(departmentList.get(i), department.getNameMainDepartment());
         }
     }
-    @RequestMapping(value = "/findAllDepartments",method = RequestMethod.GET)
+
+    @RequestMapping(value = "/findAllDepartments", method = RequestMethod.GET)
     public List<Department> findAllDepartments() {
         return departmentService.findAllDepartments();
     }
-//
-//    @RequestMapping(method = RequestMethod.GET)
-//    public Employee findChiefEmployee(Department department) {
-//        return departmentService.findChiefEmployee(department);
-//    }
+
+    @RequestMapping(value = "/findChiefEmployee", method = RequestMethod.GET)
+    public Employee findChiefEmployee(Department department) {
+        return departmentService.findChiefEmployee(department);
+    }
 
     @RequestMapping(value = "/updateDepartment", method = RequestMethod.PUT)
     public void updateDepartment(@RequestBody Department department) {
@@ -85,6 +90,11 @@ public class DepartmentProxyResource {
     @RequestMapping(value = "/findAllMainDepartments", method = RequestMethod.GET)
     public List<Department> findAllMainDepartments(@RequestBody String name) {
         return departmentService.findAllMainDepartments(name);
+    }
+
+ @RequestMapping(value = "/findAllSubDepartments", method = RequestMethod.GET)
+    public List<Department> findAllSubDepartments(@RequestBody String name) {
+        return departmentService.findAllSubDepartments(name);
     }
 
     @RequestMapping(value = "/departmentSalary", method = RequestMethod.GET)
