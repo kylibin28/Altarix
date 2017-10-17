@@ -1,5 +1,7 @@
 package departmentProgram.model;
 
+import org.springframework.hateoas.Identifiable;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.HashSet;
@@ -10,7 +12,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "departments")
-public class Department {
+public class Department implements Identifiable<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,10 +34,6 @@ public class Department {
     @OneToOne()
     @JoinColumn(name = "chief_employee")
     private Employee chief_employee;
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
-//    private Employee chiefEmployee;
 
     public Department(){}
 
@@ -89,26 +87,31 @@ public class Department {
         return nameMainDepartment;
     }
 
-    @Override
-    public String toString() {
+//    @Override
+//    public String toString() {
+//
+//        if(chief_employee != null && employees != null)
+//        return "Department{" +
+//                "id_department=" + id_department +
+//                ", department_name='" + department_name + '\'' +
+//                ", creation_date=" + creation_date +
+//                ", NameMainDepartment='" + nameMainDepartment + '\'' +
+//                ", chief: surname=" + chief_employee.getSurname() + " name=" + chief_employee.getName() +
+//                ", count_employees='" + employees.size() +
+//                '}';
+//        else return "Department{" +
+//                "id_department=" + id_department +
+//                ", department_name='" + department_name + '\'' +
+//                ", creation_date=" + creation_date +
+//                ", NameMainDepartment='" + nameMainDepartment + '\'' +
+//                ", chief: surname= null" +
+//                ", count_employees= null" +
+//                '}';
+//    }
 
-        if(chief_employee != null && employees != null)
-        return "Department{" +
-                "id_department=" + id_department +
-                ", department_name='" + department_name + '\'' +
-                ", creation_date=" + creation_date +
-                ", NameMainDepartment='" + nameMainDepartment + '\'' +
-                ", chief: surname=" + chief_employee.getSurname() + " name=" + chief_employee.getName() +
-                ", count_employees='" + employees.size() +
-                '}';
-        else return "Department{" +
-                "id_department=" + id_department +
-                ", department_name='" + department_name + '\'' +
-                ", creation_date=" + creation_date +
-                ", NameMainDepartment='" + nameMainDepartment + '\'' +
-                ", chief: surname= null" +
-                ", count_employees= null" +
-                '}';
+    @Override
+    public Integer getId() {
+        return id_department;
     }
 }
 

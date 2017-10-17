@@ -5,10 +5,7 @@ import departmentProgram.model.Employee;
 import departmentProgram.service.DepartmentService;
 import departmentProgram.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.List;
@@ -26,61 +23,61 @@ public class EmployeeProxyResource {
     @Autowired
     private DepartmentService departmentService;
 
-    @RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
-    public void addEmployee(@RequestBody Employee employee) {
+    @RequestMapping(value = "/addEmployee/{employee}", method = RequestMethod.POST)
+    public void addEmployee(@PathVariable Employee employee) {
         employeeService.saveEmployee(employee);
     }
 
-    @RequestMapping(value = "/deleteEmployee", method = RequestMethod.DELETE)
-    public void deleteEmployee(@RequestBody Employee employee) {
+    @RequestMapping(value = "/deleteEmployee/{employee}", method = RequestMethod.DELETE)
+    public void deleteEmployee(@PathVariable Employee employee) {
         employeeService.deleteEmployee(employee);
     }
 
-    @RequestMapping(value = "/findAllEmployee",method = RequestMethod.GET)
+    @RequestMapping(value = "/findAllEmployee", method = RequestMethod.GET)
     public List<Employee> findAllEmployee() {
         return employeeService.findAllEmployees();
     }
 
-    @RequestMapping(value = "/findEmployeesById", method = RequestMethod.GET)
-    public Employee findEmployeesById(@RequestBody int id) {
+    @RequestMapping(value = "/findEmployeesById/{id}", method = RequestMethod.GET)
+    public Employee findEmployeesById(@PathVariable int id) {
         return employeeService.findEmployeeById(id);
     }
 
-    @RequestMapping(value = "/findEmployeesInDepartment", method = RequestMethod.GET)
-    public List<Employee> findEmployeesInDepartment(@RequestBody String departmemtName) {
-        return employeeService.findEmployeesInDepartment(departmemtName);
+    @RequestMapping(value = "/findEmployeesInDepartment/{departmentName}", method = RequestMethod.GET)
+    public List<Employee> findEmployeesInDepartment(@PathVariable String departmentName) {
+        return employeeService.findEmployeesInDepartment(departmentName);
     }
 
-    @RequestMapping(value = "/findEmployeesByParameters", method = RequestMethod.GET)
-    public List<Employee> findEmployeesByParameters(@RequestBody String surname, String name, String patronymic, Date birthday) {
+    @RequestMapping(value = "/findEmployeesByParameters/{surname,name,patronymic,birthday}", method = RequestMethod.GET)
+    public List<Employee> findEmployeesByParameters(@PathVariable String surname, String name, String patronymic, Date birthday) {
         return employeeService.findEmployeesByParameters(surname, name, patronymic, birthday);
     }
 
-    @RequestMapping(value = "/updateEmployee", method = RequestMethod.PUT)
-    public void updateEmployee(@RequestBody Employee oldEmployee, Employee newEmployee) {
+    @RequestMapping(value = "/updateEmployee/{oldEmployee,newEmployee}", method = RequestMethod.PUT)
+    public void updateEmployee(@PathVariable Employee oldEmployee, Employee newEmployee) {
         employeeService.updateEmployee(oldEmployee, newEmployee);
     }
 
-    @RequestMapping(value = "/updateEmployeesDepartment", method = RequestMethod.PUT)
-    public void updateEmployeesDepartment(@RequestBody Employee oldEmployee, String newDepartmemtName) {
-        Department department = departmentService.findDepartmentByDepartmentName(newDepartmemtName);
-        if(department == null)
-            throw new RuntimeException("Not found department " + newDepartmemtName);
-        employeeService.updateEmployeesDepartment(oldEmployee, newDepartmemtName);
+    @RequestMapping(value = "/updateEmployeesDepartment/{oldEmployee,newDepartmentName}", method = RequestMethod.PUT)
+    public void updateEmployeesDepartment(@PathVariable Employee oldEmployee, String newDepartmentName) {
+        Department department = departmentService.findDepartmentByDepartmentName(newDepartmentName);
+        if (department == null)
+            throw new RuntimeException("Not found department " + newDepartmentName);
+        employeeService.updateEmployeesDepartment(oldEmployee, newDepartmentName);
     }
 
-    @RequestMapping(value = "/dismissEmployee", method = RequestMethod.PUT)
-    public void dismissEmployee(@RequestBody Employee employee, Date demissDate) {
+    @RequestMapping(value = "/dismissEmployee/{employee,demissDate}", method = RequestMethod.PUT)
+    public void dismissEmployee(@PathVariable Employee employee, Date demissDate) {
         employeeService.dismissEmployee(employee, demissDate);
     }
 
-    @RequestMapping(value = "/changeDepartment", method = RequestMethod.PUT)
-    public void changeDepartment(@RequestBody String oldDepartmentName, String newDepartmemtName) {
-        employeeService.changeDepartment(oldDepartmentName, newDepartmemtName);
+    @RequestMapping(value = "/changeDepartment/{oldDepartmentName,newDepartmentName}", method = RequestMethod.PUT)
+    public void changeDepartment(@PathVariable String oldDepartmentName, String newDepartmentName) {
+        employeeService.changeDepartment(oldDepartmentName, newDepartmentName);
     }
 
-    @RequestMapping(value = "/findChiefOfEmployee", method = RequestMethod.PUT)
-    public Employee findChiefOfEmployee(@RequestBody int id) {
+    @RequestMapping(value = "/findChiefOfEmployee/{id}", method = RequestMethod.PUT)
+    public Employee findChiefOfEmployee(@PathVariable int id) {
         return employeeService.findChiefOfEmployeeById(id);
     }
 }

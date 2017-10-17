@@ -1,7 +1,6 @@
 package departmentProgram.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,10 +8,9 @@ import java.util.Date;
 /**
  * Created by Макс on 11.10.2017.
  */
-
 @Entity
 @Table(name = "employees")
-public class Employee {
+public class Employee implements Identifiable<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_employee")
@@ -48,11 +46,7 @@ public class Employee {
     @Column(name = "chief", nullable = false)
     private Boolean chief;
 
-    public Integer getId_employee() {
-        return id_employee;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_department")
     private Department id_department;
 
@@ -169,25 +163,26 @@ public class Employee {
         this.id_department = id_department;
     }
 
-//    public void setDepartment(Department department) {
-//        this.department = department;
+//    @Override
+//    public String toString() {
+//        return "Employee{" +
+//                "id_employee=" + id_employee +
+//                ", name='" + name + '\'' +
+//                ", surname='" + surname + '\'' +
+//                ", patronymic='" + patronymic + '\'' +
+//                ", sex='" + sex + '\'' +
+//                ", birthday=" + birthday +
+//                ", admition_date=" + admition_date +
+//                ", dismissal_date=" + dismissal_date +
+//                ", post='" + post + '\'' +
+//                ", salary=" + salary +
+//                ", chief=" + chief +
+////                ", chief: surname=" + chief_employee.getSurname() + " name=" + chief_employee.getName() +
+//                '}';
 //    }
 
     @Override
-    public String toString() {
-        return "Employee{" +
-                "id_employee=" + id_employee +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                ", sex='" + sex + '\'' +
-                ", birthday=" + birthday +
-                ", admition_date=" + admition_date +
-                ", dismissal_date=" + dismissal_date +
-                ", post='" + post + '\'' +
-                ", salary=" + salary +
-                ", chief=" + chief +
-//                ", chief: surname=" + chief_employee.getSurname() + " name=" + chief_employee.getName() +
-                '}';
+    public Integer getId() {
+        return id_employee;
     }
 }
